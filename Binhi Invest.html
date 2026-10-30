@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Binhi Invest</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Source+Sans+3:wght@400;600&display=swap">
+<style>
+:root{--bg:#F2F6F3;--surface:#fff;--ink:#10201A;--muted:#55665E;--line:#D3DDD7;--brand:#14513B;--brand-ink:#fff;--tint:#E2EFE8;--warn:#8A5A00;
+--display:"Bricolage Grotesque","Trebuchet MS",system-ui,sans-serif;--body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D1612;--surface:#15221C;--ink:#E8F1EC;--muted:#9BB0A5;--line:#26382F;--brand:#4CC38A;--brand-ink:#08140F;--tint:#1B3128;--warn:#F0B429;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0D1612;--surface:#15221C;--ink:#E8F1EC;--muted:#9BB0A5;--line:#26382F;--brand:#4CC38A;--brand-ink:#08140F;--tint:#1B3128;--warn:#F0B429;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 1.0625rem/1.55 var(--body)}
+.wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+header{display:flex;justify-content:space-between;align-items:center;padding:18px 0}
+.logo{display:flex;align-items:center;gap:10px;font:800 1.4rem var(--display);color:var(--brand)}
+nav a{color:var(--ink);text-decoration:none;margin-left:22px;font-weight:600}
+nav a:hover{text-decoration:underline}
+h1{font:800 clamp(2.5rem,8vw,5.2rem)/1 var(--display);letter-spacing:-.02em;margin:48px 0 18px;max-width:11em}
+.lead{font-size:1.2rem;color:var(--muted);max-width:34em;margin:0 0 28px}
+h2{font:800 clamp(1.6rem,4vw,2.2rem)/1.15 var(--display);margin:64px 0 8px}
+.sub{color:var(--muted);margin:0 0 24px;max-width:40em}
+.btn{font:600 1rem var(--body);background:var(--brand);color:var(--brand-ink);border:0;border-radius:8px;padding:13px 24px;cursor:pointer;text-decoration:none;display:inline-block}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--line)}
+:focus-visible{outline:3px solid var(--brand);outline-offset:2px}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:14px}
+.plan{text-align:left;font:inherit;color:inherit;background:var(--surface);border:2px solid var(--line);border-radius:14px;padding:18px;cursor:pointer;display:flex;flex-direction:column;gap:10px}
+.plan:hover{border-color:var(--muted)}
+.plan[aria-pressed="true"]{border-color:var(--brand);background:var(--tint)}
+.plan h3{font:800 1.25rem var(--display);margin:0}
+.plan p{margin:0;color:var(--muted);font-size:.97rem}
+.ret{font:800 1.5rem var(--display)}
+.min{font-size:.92rem;font-weight:600}
+@media(max-width:820px){nav a{margin-left:14px}}
+.actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;margin-top:14px}
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);padding:26px;max-width:420px;width:calc(100% - 32px)}
+dialog::backdrop{background:rgba(0,0,0,.5)}
+dialog h3{font:800 1.4rem var(--display);margin:0 0 10px}
+dialog dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:14px 0 20px}
+dialog dt{color:var(--muted)}dialog dd{margin:0;font-weight:600;text-align:right}
+footer{margin:64px 0 32px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:.93rem}
+:root{--err:#B3261E}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--err:#FF9B94}}
+:root[data-theme="dark"]{--err:#FF9B94}
+[hidden]{display:none!important}
+.gate{min-height:85vh;display:flex;align-items:center;justify-content:center;padding:24px 20px}
+.gcard{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:30px;width:100%;max-width:440px}
+.gcard .gt{font:800 1.9rem/1.1 var(--display);margin:20px 0 6px}
+.gcard .sub{margin:0}
+.tabs{display:flex;gap:8px;margin:20px 0}
+.tabs button{flex:1;font:600 1rem var(--body);padding:10px;border-radius:8px;border:2px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.tabs button[aria-pressed="true"]{border-color:var(--brand);background:var(--tint)}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.gcard label{display:block;font-weight:600;margin-bottom:6px}
+.gcard input{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:12px;margin-bottom:16px}
+.err{color:var(--err);font-weight:600;min-height:1.5em;margin:0 0 8px}
+.fine{color:var(--muted);font-size:.9rem;margin:16px 0 0}
+.hi{font-weight:600;color:var(--brand);margin:32px 0 0}
+.hi+h1{margin-top:8px}
+nav button{font:600 1rem var(--body);margin-left:22px;background:none;border:1.5px solid var(--line);border-radius:8px;padding:6px 14px;color:var(--ink);cursor:pointer}
+header{flex-wrap:wrap;gap:10px}
+nav{display:flex;align-items:center;flex-wrap:wrap;gap:4px 0}
+nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:6px;text-decoration-thickness:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:22px}
+.panel h3{font:800 1.2rem var(--display);margin:0 0 8px}
+.panel p{margin-top:0}
+.panel label{font-weight:600}
+.panel input{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:12px;margin:6px 0 14px;text-transform:uppercase}
+.rgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.bal{display:block;font:800 2.6rem var(--display);color:var(--brand)}
+.info{display:grid;grid-template-columns:auto 1fr;gap:8px 28px;margin:0}
+.info dt{color:var(--muted)}.info dd{margin:0;font-weight:600}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);white-space:nowrap}
+th{color:var(--muted);font-weight:600}
+select{font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:10px}
+:root{--gold:#B7791F}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--gold:#F0B429}}
+:root[data-theme="dark"]{--gold:#F0B429}
+.plan{cursor:default}
+.plan:hover{border-color:var(--line)}
+.plan.mine{border-color:var(--brand);background:var(--tint)}
+.plan.sup{border-color:var(--gold)}
+.plan.sup.mine{border-color:var(--brand)}
+.plan .btn{margin-top:auto}
+.tag{color:var(--gold);font-weight:600;font-size:.92rem}
+#vHome .wallet{margin:24px 0 0}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.chips button{font:600 .95rem var(--body);padding:8px 14px;border-radius:8px;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer}
+.chips button:hover{border-color:var(--brand)}
+.wallet input,.wallet select{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:8px;padding:12px;margin:6px 0 14px;text-transform:none}
+.wallet .wrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:0 16px}
+.wallet .bal{font-size:2rem}
+.hist{margin:14px 0 0;padding:0;list-style:none}
+.hist li{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line)}
+.hist li span:last-child{font-weight:600}
+#vProfile .wallet{margin-top:0}
+</style>
+</head>
+<body>
+<section class="gate" id="gate"><div class="gcard">
+<div class="logo"><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M14 26V13M14 13C14 7 9 4 3 4c0 6 4 9 11 9ZM14 16c0-5 4-8 11-8 0 6-4 9-11 8Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Binhi</div>
+<h1 class="gt" id="gTitle">Create your account</h1>
+<p class="sub" id="gSub"></p>
+<div class="tabs" role="group" aria-label="Account"><button type="button" id="tReg" aria-pressed="true">Register</button><button type="button" id="tLog" aria-pressed="false">Log in</button></div>
+<form id="gForm" novalidate>
+<div class="row2" id="nameRow"><div><label for="fn">First name</label><input id="fn" autocomplete="given-name"></div><div><label for="ln">Last name</label><input id="ln" autocomplete="family-name"></div></div>
+<label for="ph">Mobile number</label><input id="ph" type="tel" inputmode="tel" autocomplete="tel" placeholder="09171234567">
+<label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password">
+<div id="pw2Row"><label for="pw2">Confirm password</label><input id="pw2" type="password" autocomplete="new-password"><label for="inv">Invitation code (optional)</label><input id="inv" autocomplete="off" placeholder="BINHI-XXXXX"></div>
+<p class="err" id="err" role="alert"></p>
+<button class="btn" id="gBtn" type="submit" style="width:100%">Create account</button>
+</form>
+<p class="fine">Demo only: your details stay in this browser and are not sent anywhere. Your password is scrambled before it is saved.</p>
+</div></section>
+<div class="wrap" id="app" hidden>
+<header>
+  <div class="logo"><svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><path d="M14 26V13M14 13C14 7 9 4 3 4c0 6 4 9 11 9ZM14 16c0-5 4-8 11-8 0 6-4 9-11 8Z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>Binhi</div>
+  <nav><a href="#" data-v="home">Invest</a><a href="#" data-v="rewards">Rewards</a><a href="#" data-v="team">Team</a><a href="#" data-v="profile">Profile</a><button type="button" id="logout">Log out</button></nav>
+</header>
+
+<main id="vHome">
+<p class="hi" id="hi"></p>
+<h1>Pick where your money grows.</h1>
+<p class="lead">Choose a plan, collect your income every day, and grow your team. All amounts are in Philippine pesos (PhP).</p>
+<a class="btn" href="#plans">Compare plans</a>
+
+<section class="panel wallet" id="wHome"></section>
+
+<h2 id="plans">Regular plans</h2>
+<p class="sub">Each plan pays 18% of its price every day for 90 days. These are made-up returns for a class project.</p>
+<div class="plans" id="regList"></div>
+<h2 id="super">Super plans</h2>
+<p class="sub">A bigger daily income of 30% of the price, for 30 days.</p>
+<div class="plans" id="supList"></div>
+</main>
+
+<main id="vRewards" hidden>
+<h2 style="margin-top:40px">Rewards</h2>
+<p class="sub">Check in every day to earn PhP 10, or redeem a gift code.</p>
+<div class="rgrid">
+<div class="panel"><p class="fine" style="margin:0">Wallet balance</p><b class="bal" id="bal"></b></div>
+<div class="panel"><h3>Daily check-in</h3><p id="ciText"></p><button class="btn" id="ci" type="button">Check in (+PhP 10)</button></div>
+<div class="panel"><h3>Gift code</h3><label for="code">Enter your code</label><input id="code" autocomplete="off"><button class="btn" id="redeem" type="button">Redeem code</button><p class="fine" id="rMsg" role="status"></p><p class="fine">Demo codes: BINHI50, WELCOME100, STUDENT25</p></div>
+</div>
+</main>
+
+<main id="vTeam" hidden>
+<h2 style="margin-top:40px">Your team</h2>
+<p class="sub">Invite friends with your code. When someone on your team chooses their first plan, you earn a commission based on that plan’s price.</p>
+<div class="rgrid">
+<div class="panel"><p class="fine" style="margin:0">Your invitation code</p><b class="bal" id="myCode" style="font-size:2rem"></b><div class="actions"><button class="btn" id="copyCode" type="button">Copy code</button><span class="fine" id="copyMsg" role="status"></span></div></div>
+<div class="panel"><p class="fine" style="margin:0">Team commission earned</p><b class="bal" id="teamEarn"></b><p class="fine" id="teamCount" style="margin:0"></p></div>
+</div>
+<h2>Levels</h2>
+<div class="panel" style="overflow-x:auto"><table id="lvlTbl"></table></div>
+<h2>People you invited</h2>
+<div class="panel"><dl class="info" id="memSum"></dl><div class="actions"><button class="btn ghost" id="memToggle" type="button" aria-expanded="false" aria-controls="memBox">See invited people</button></div><div id="memBox" hidden style="overflow-x:auto;margin-top:14px"><p id="memEmpty" class="fine" style="margin:0"></p><table id="memTbl"></table></div></div>
+<p class="fine">Simulation only: commissions are play money. In real life, paying commissions through several levels of invitees is a common warning sign of an investment scam (a pyramid scheme).</p>
+</main>
+
+<main id="vProfile" hidden>
+<h2 style="margin-top:40px">Your profile</h2>
+<div class="panel"><dl class="info" id="pInfo"></dl></div>
+<h2>Your earnings</h2>
+<div class="panel"><p class="fine" style="margin:0">Total earned</p><b class="bal" id="eTotal"></b><dl class="info" id="eList" style="margin-top:14px"></dl></div>
+<h2>Your plan</h2>
+<div class="panel" id="pPlan"></div>
+<h2>Your wallet</h2>
+<section class="panel wallet" id="wProfile"></section>
+</main>
+
+<footer>Binhi is a fictional platform made for a class project. Returns shown are made-up examples, not real offers or financial advice. Nothing is actually invested.</footer>
+</div>
+
+<dialog id="dlg">
+  <h3>Confirm your plan</h3>
+  <p style="margin:0;color:var(--muted)">Check the details below.</p>
+  <dl id="dlgList"></dl>
+  <p class="err" id="dlgNote" role="status" style="margin:0 0 10px"></p>
+  <div class="actions" style="justify-content:flex-end">
+    <button class="btn ghost" id="cancel">Go back</button>
+    <button class="btn" id="confirm">Confirm plan</button>
+  </div>
+</dialog>
+
+<script>
+var PLANS=[
+{name:"Plan 1",price:200,daily:36,days:90},
+{name:"Plan 2",price:500,daily:90,days:90},
+{name:"Plan 3",price:750,daily:135,days:90},
+{name:"Plan 4",price:1000,daily:180,days:90},
+{name:"Plan 5",price:2000,daily:360,days:90},
+{name:"Super Plan 1",price:500,daily:150,days:30,sup:true},
+{name:"Super Plan 2",price:1000,daily:300,days:30,sup:true},
+{name:"Super Plan 3",price:1500,daily:450,days:30,sup:true},
+{name:"Super Plan 4",price:2000,daily:600,days:30,sup:true},
+{name:"Super Plan 5",price:2500,daily:750,days:30,sup:true}
+];
+var $=function(id){return document.getElementById(id)};
+var peso=function(n){return "PhP "+n.toLocaleString("en-PH",{maximumFractionDigits:2})};
+var pending=0;
+
+function buildCards(){
+  $("regList").innerHTML="";$("supList").innerHTML="";
+  PLANS.forEach(function(p,k){
+    var mine=cu&&cu.plan&&cu.plan.name===p.name;
+    var d=document.createElement("div");
+    d.className="plan"+(p.sup?" sup":"")+(mine?" mine":"");
+    d.innerHTML="<h3>"+p.name+"</h3><div class='ret'>"+peso(p.price)+"</div><p><b>"+peso(p.daily)+"</b> every day</p><p>For "+p.days+" days</p><div class='min'>Total income "+peso(p.daily*p.days)+"</div>"+(p.sup?"<div class='tag'>30 days only</div>":"");
+    var b=document.createElement("button");
+    b.className="btn"+(mine?" ghost":"");b.type="button";
+    b.textContent=mine?"Your plan":"Choose plan";b.disabled=!!mine;
+    b.onclick=function(){choose(k)};
+    d.appendChild(b);
+    $(p.sup?"supList":"regList").appendChild(d);
+  });
+}
+
+var dlg=$("dlg");
+function choose(k){
+  pending=k;var p=PLANS[k];
+  $("dlgList").innerHTML="<dt>Plan</dt><dd>"+p.name+"</dd><dt>Price</dt><dd>"+peso(p.price)+"</dd><dt>Daily income</dt><dd>"+peso(p.daily)+"</dd><dt>Length</dt><dd>"+p.days+" days</dd><dt>Total income</dt><dd>"+peso(p.daily*p.days)+"</dd>"+"<dt>Your wallet balance</dt><dd>"+peso(cu.dep)+"</dd>"+(cu.plan?"<dt>Current plan</dt><dd>Will be replaced</dd>":"");
+  var short=cu.dep<p.price;
+  $("confirm").disabled=short;
+  $("confirm").textContent=short?"Not enough balance":"Pay "+peso(p.price);
+  $("dlgNote").textContent=short?"You need "+peso(p.price-cu.dep)+" more. Make a deposit first.":"";
+  if(dlg.showModal)dlg.showModal();else dlg.setAttribute("open","");
+}
+$("cancel").onclick=function(){dlg.close()};
+$("confirm").onclick=function(){
+  dlg.close();
+  var p=PLANS[pending],all=users();
+  if(cu.dep<p.price){return}
+  cu.dep-=p.price;
+  cu.log.unshift({t:"Paid for "+p.name,a:-p.price,d:today()});
+  cu.plan={name:p.name,price:p.price,daily:p.daily,days:p.days,start:today(),got:0,last:""};
+  all[cph]=cu;
+  if(!cu.paid){cu.paid=true;payUp(all,cph,p.price)}
+  sset("localStorage","binhi_users",JSON.stringify(all));
+  cu=all[cph];
+  go("profile");
+};
+
+var mem={};
+function sget(n,k){try{return window[n].getItem(k)}catch(e){return mem[n+k]||null}}
+function sset(n,k,v){try{window[n].setItem(k,v)}catch(e){mem[n+k]=v}}
+function sdel(n,k){try{window[n].removeItem(k)}catch(e){delete mem[n+k]}}
+function users(){try{return JSON.parse(sget("localStorage","binhi_users")||"{}")||{}}catch(e){return {}}}
+var mode="register";
+function setMode(m){
+  mode=m;var r=m==="register";
+  $("nameRow").hidden=!r;$("pw2Row").hidden=!r;
+  $("tReg").setAttribute("aria-pressed",r);$("tLog").setAttribute("aria-pressed",!r);
+  $("gTitle").textContent=r?"Create your account":"Welcome back";
+  $("gSub").textContent=r?"Register with your name, mobile number and a password to open the investment dashboard. You get a PhP 60 welcome bonus.":"Log in with your mobile number and password.";
+  $("gBtn").textContent=r?"Create account":"Log in";
+  $("err").textContent="";
+}
+function cleanPhone(v){var s=v.replace(/[\s-]/g,"");if(/^\+639\d{9}$/.test(s))s="0"+s.slice(3);return /^09\d{9}$/.test(s)?s:null}
+var NAME=/^[A-Za-zÀ-ÿ][A-Za-zÀ-ÿ .'-]{1,39}$/;
+function showApp(ph){
+  cph=ph;cu=users()[ph];
+  if(!cu.code||!cu.earn){cu.code=cu.code||mkCode(users());cu.earn=cu.earn||[0,0,0];save()}
+  $("gForm").reset();$("gate").hidden=true;$("app").hidden=false;
+  $("hi").textContent="Welcome, "+cu.first+".";
+  if(cu.plan&&!cu.plan.price){cu.plan=null;cu.paid=false;save()}
+  if(cu.plan){var np=PLANS.filter(function(x){return x.name===cu.plan.name})[0];if(np&&(cu.plan.daily!==np.daily||cu.plan.days!==np.days)){cu.plan.daily=np.daily;cu.plan.days=np.days;save()}}
+  if(typeof cu.dep!=="number"||!cu.log||!cu.inc){
+    var old=cu.bal||0,tm=(cu.earn||[0,0,0]).reduce(function(a,b){return a+b},0);
+    cu.dep=(cu.dep||0)+old;cu.bal=0;cu.log=cu.log||[];
+    cu.inc={plan:0,bonus:Math.max(0,old-tm)};save();
+  }
+  buildCards();drawWallet();go("home");
+}
+function showGate(){$("app").hidden=true;$("gate").hidden=false;$("gForm").reset();setMode("login");window.scrollTo(0,0)}
+$("tReg").onclick=function(){setMode("register")};
+$("tLog").onclick=function(){setMode("login")};
+var cu=null,cph="";
+function save(){var all=users();all[cph]=cu;sset("localStorage","binhi_users",JSON.stringify(all))}
+async function hashPw(pw,salt){
+  try{
+    var b=await crypto.subtle.digest("SHA-256",new TextEncoder().encode(salt+pw));
+    return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,"0")}).join("");
+  }catch(e){return "plain:"+salt+pw}
+}
+$("gForm").onsubmit=async function(e){
+  e.preventDefault();
+  var E=$("err"),ph=cleanPhone($("ph").value),pw=$("pw").value,all=users();
+  var bad="Enter a Philippine mobile number like 09171234567 or +639171234567.";
+  if(mode==="register"){
+    var f=$("fn").value.trim(),l=$("ln").value.trim();
+    if(!NAME.test(f)||!NAME.test(l)){E.textContent="Enter your first and last name using letters only.";return}
+    if(!ph){E.textContent=bad;return}
+    if(pw.length<6){E.textContent="Use a password with at least 6 characters.";return}
+    if(pw!==$("pw2").value){E.textContent="The two passwords don’t match.";return}
+    if(all[ph]&&all[ph].hash){E.textContent="This number is already registered. Choose Log in.";return}
+    var inv=$("inv").value.trim().toUpperCase(),ref=null;
+    if(inv){ref=byCode(all,inv);if(!ref){E.textContent="That invitation code wasn’t found. Check it or leave it empty.";return}}
+    var salt=Math.random().toString(36).slice(2)+Date.now().toString(36);
+    all[ph]={first:f,last:l,salt:salt,hash:await hashPw(pw,salt),plan:null,dep:60,inc:{plan:0,bonus:60},log:[{t:"Welcome bonus",a:60,d:today()}],streak:0,last:"",used:[],ref:ref,code:mkCode(all),paid:false,earn:[0,0,0]};
+    sset("localStorage","binhi_users",JSON.stringify(all));
+  }else{
+    var a=all[ph];
+    if(!ph){E.textContent=bad;return}
+    if(!a){E.textContent="No account found for this number. Choose Register to create one.";return}
+    if(!a.hash){E.textContent="This account has no password yet. Choose Register with the same number to set one.";return}
+    if(await hashPw(pw,a.salt)!==a.hash){E.textContent="Wrong password. Try again.";return}
+  }
+  sset("sessionStorage","binhi_session",ph);
+  showApp(ph);
+};
+$("logout").onclick=function(){sdel("sessionStorage","binhi_session");cu=null;showGate()};
+
+function go(v){
+  ["home","profile","rewards","team"].forEach(function(k){$("v"+k[0].toUpperCase()+k.slice(1)).hidden=k!==v});
+  document.querySelectorAll("nav a").forEach(function(a){if(a.dataset.v===v)a.setAttribute("aria-current","page");else a.removeAttribute("aria-current")});
+  if(v==="home"&&cu)drawWallet();
+  if(v==="profile")drawProfile();
+  if(v==="rewards")drawRewards();
+  if(v==="team")drawTeam();
+  window.scrollTo(0,0);
+}
+document.querySelectorAll("nav a").forEach(function(a){a.onclick=function(e){e.preventDefault();go(a.dataset.v)}});
+
+function rows(el,pairs){el.innerHTML="";pairs.forEach(function(p){var t=document.createElement("dt"),d=document.createElement("dd");t.textContent=p[0];d.textContent=p[1];el.appendChild(t);el.appendChild(d)})}
+function drawProfile(){
+  var P=cu.plan,box=$("pPlan");
+  rows($("pInfo"),[["Name",cu.first+" "+cu.last],["Mobile number",cph],["Wallet balance",peso(cu.dep)],["Check-in streak",cu.streak+(cu.streak===1?" day":" days")]]);
+  var team=cu.earn.reduce(function(a,b){return a+b},0);
+  $("eTotal").textContent=peso(cu.inc.plan+cu.inc.bonus+team);
+  rows($("eList"),[
+    ["Earning now",P&&P.got<P.days?peso(P.daily)+" a day":"No active plan"],
+    ["Still to collect from your plan",P?peso((P.days-P.got)*P.daily):peso(0)],
+    ["Daily plan income so far",peso(cu.inc.plan)],
+    ["Team commission",peso(team)],
+    ["Check-ins and gift codes",peso(cu.inc.bonus)]
+  ]);
+  if(!P){
+    box.innerHTML='<p>You haven\u2019t chosen a plan yet.</p><button class="btn" id="chg" type="button">Browse plans</button>';
+  }else{
+    box.innerHTML='<dl class="info" id="pPlanList"></dl><div class="actions"><button class="btn" id="collect" type="button"></button><button class="btn ghost" id="chg" type="button">Change plan</button><button class="btn ghost" id="skip" type="button">Demo: next day</button></div>';
+    rows($("pPlanList"),[["Plan",P.name],["Price",peso(P.price)],["Daily income",peso(P.daily)],["Days collected",P.got+" of "+P.days],["Income collected",peso(P.got*P.daily)]]);
+    var done=P.got>=P.days,took=P.last===today(),c=$("collect");
+    c.textContent=done?"Plan finished":took?"Collected today":"Collect today\u2019s income (+"+peso(P.daily)+")";
+    c.disabled=done||took;
+    c.onclick=function(){P.got++;P.last=today();cu.dep+=P.daily;cu.inc.plan+=P.daily;save();drawProfile()};
+    $("skip").onclick=function(){P.last="";save();drawProfile()};
+  }
+  $("chg").onclick=function(){go("home")};
+  drawWallet();
+}
+
+var MIN=200,DEP_MAX=5000,wid=0;
+function mountWallet(el){
+  var n="w"+(++wid),mode="dep";
+  el.innerHTML='<h3>Deposit and withdraw</h3><p class="fine" style="margin:0">Wallet balance</p><b class="bal w-bal"></b>'
+   +'<div class="tabs" role="group" aria-label="Wallet action"><button type="button" class="w-tdep" aria-pressed="true">Deposit</button><button type="button" class="w-twd" aria-pressed="false">Withdraw</button></div>'
+   +'<div class="wrow"><div><label for="'+n+'a">Amount (PhP)</label><input id="'+n+'a" class="w-amt" type="number" inputmode="numeric" step="1" placeholder="200"><div class="chips w-chips"></div></div>'
+   +'<div><label for="'+n+'m">Method</label><select id="'+n+'m" class="w-method"></select></div></div>'
+   +'<p class="err w-err" role="alert"></p><button class="btn w-go" type="button"></button><p class="fine w-hint"></p><ul class="hist w-hist"></ul>';
+  var q=function(c){return el.querySelector(c)};
+  function setMode(m){
+    mode=m;var d=m==="dep";
+    q(".w-tdep").setAttribute("aria-pressed",d);q(".w-twd").setAttribute("aria-pressed",!d);
+    q(".w-go").textContent=d?"Deposit":"Withdraw";
+    q(".w-hint").textContent=d?"Deposit from "+peso(MIN)+" to "+peso(DEP_MAX)+" each time. Demo only: no real money is used.":"Withdraw at least "+peso(MIN)+", up to your wallet balance. Demo only: no real money is sent.";
+    q(".w-method").innerHTML=(d?["GCash","Maya","Bank transfer","Over the counter"]:["GCash","Maya","Bank transfer"]).map(function(x){return "<option>"+x+"</option>"}).join("");
+    var chips=q(".w-chips");chips.innerHTML="";
+    (d?[200,500,1000,2000,5000]:[200,500,1000,"All"]).forEach(function(v){
+      var b=document.createElement("button");b.type="button";b.textContent=v==="All"?"All":peso(v);
+      b.onclick=function(){q(".w-amt").value=v==="All"?Math.floor(cu.dep):v;q(".w-err").textContent=""};
+      chips.appendChild(b);
+    });
+    q(".w-err").textContent="";
+  }
+  q(".w-tdep").onclick=function(){setMode("dep")};
+  q(".w-twd").onclick=function(){setMode("wd")};
+  q(".w-go").onclick=function(){
+    var v=Math.floor(+q(".w-amt").value),E=q(".w-err"),m=q(".w-method").value;
+    if(mode==="dep"){
+      if(!v||v<MIN||v>DEP_MAX){E.textContent="Enter an amount from "+peso(MIN)+" to "+peso(DEP_MAX)+".";return}
+      cu.dep+=v;cu.td=(cu.td||0)+v;cu.log.unshift({t:"Deposit via "+m,a:v,d:today()});
+    }else{
+      if(!v||v<MIN){E.textContent="The smallest withdrawal is "+peso(MIN)+".";return}
+      if(v>cu.dep){E.textContent="You only have "+peso(cu.dep)+" in your wallet.";return}
+      cu.dep-=v;cu.log.unshift({t:"Withdrawal to "+m,a:-v,d:today()});
+    }
+    cu.dep=Math.round(cu.dep*100)/100;
+    cu.log=cu.log.slice(0,50);save();
+    q(".w-amt").value="";E.textContent="";
+    var g=q(".w-go");g.textContent=(mode==="dep"?"Deposited ":"Withdrew ")+peso(v);
+    drawWallet();
+    setTimeout(function(){g.textContent=mode==="dep"?"Deposit":"Withdraw"},2200);
+  };
+  el._refresh=function(){
+    q(".w-bal").textContent=peso(cu.dep);
+    var ul=q(".w-hist");ul.innerHTML="";
+    cu.log.slice(0,5).forEach(function(r){
+      var li=document.createElement("li"),a=document.createElement("span"),b=document.createElement("span");
+      a.textContent=r.t+" on "+r.d;b.textContent=(r.a>0?"+":"-")+peso(Math.abs(r.a));
+      li.appendChild(a);li.appendChild(b);ul.appendChild(li);
+    });
+  };
+  setMode("dep");
+}
+function drawWallet(){document.querySelectorAll(".wallet").forEach(function(el){if(el._refresh)el._refresh()})}
+mountWallet($("wHome"));mountWallet($("wProfile"));
+
+var CODES={BINHI50:50,WELCOME100:100,STUDENT25:25};
+function today(d){d=d||new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function drawRewards(){
+  var done=cu.last===today();
+  $("bal").textContent=peso(cu.dep);
+  $("ci").disabled=done;
+  $("ciText").textContent=done?"You checked in today. Come back tomorrow for another PhP 10.":"Check in once a day to earn PhP 10. Current streak: "+cu.streak+(cu.streak===1?" day.":" days.");
+}
+$("ci").onclick=function(){
+  var y=today(new Date(Date.now()-864e5));
+  cu.streak=cu.last===y?cu.streak+1:1;
+  cu.last=today();cu.dep+=10;cu.inc.bonus+=10;save();drawRewards();
+};
+$("redeem").onclick=function(){
+  var c=$("code").value.trim().toUpperCase(),m=$("rMsg");
+  if(!c){m.textContent="Enter a gift code first.";return}
+  if(!CODES.hasOwnProperty(c)){m.textContent="That code isn’t valid. Check it and try again.";return}
+  if(cu.used.indexOf(c)>-1){m.textContent="You already redeemed this code.";return}
+  cu.used.push(c);cu.dep+=CODES[c];cu.inc.bonus+=CODES[c];save();
+  $("code").value="";drawRewards();
+  m.textContent=peso(CODES[c])+" added to your balance.";
+};
+
+var RATES=[0.29,0.10,0.03];
+function mkCode(all){
+  var A="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",c;
+  do{c="BINHI-";for(var i=0;i<5;i++)c+=A[Math.floor(Math.random()*A.length)]}
+  while(Object.keys(all).some(function(p){return all[p].code===c}));
+  return c;
+}
+function byCode(all,c){return Object.keys(all).filter(function(p){return all[p].code===c})[0]||null}
+function team(all,root){
+  var L=[[],[],[]],prev=[root];
+  for(var i=0;i<3;i++){
+    Object.keys(all).forEach(function(p){if(prev.indexOf(all[p].ref)>-1)L[i].push(p)});
+    prev=L[i];
+  }
+  return L;
+}
+function payUp(all,phone,amt){
+  var p=all[phone].ref,paid=0;
+  for(var i=0;i<3&&p&&all[p];i++){
+    var c=Math.round(amt*RATES[i]*100)/100;
+    all[p].dep=(all[p].dep||0)+c;
+    all[p].earn=all[p].earn||[0,0,0];
+    all[p].earn[i]+=c;
+    all[p].fm=all[p].fm||{};
+    all[p].fm[phone]=Math.round(((all[p].fm[phone]||0)+c)*100)/100;
+    paid+=c;p=all[p].ref;
+  }
+  return paid;
+}
+var DN=["Maria Santos","Juan Dela Cruz","Ana Reyes","Carlo Garcia","Liza Ramos","Miguel Cruz","Bea Mendoza","Paolo Torres"];
+function newMember(all,parent){
+  var ph;
+  do{ph="09"+String(Math.floor(Math.random()*1e9)).padStart(9,"0")}while(all[ph]);
+  var n=DN[Math.floor(Math.random()*DN.length)].split(" "),pl=PLANS[Math.floor(Math.random()*PLANS.length)];
+  all[ph]={first:n[0],last:n.slice(1).join(" "),ref:parent,code:mkCode(all),demo:true,plan:{name:pl.name,price:pl.price,daily:pl.daily,days:pl.days,start:today(),got:0,last:""},paid:true,dep:0,td:pl.price,fm:{},inc:{plan:0,bonus:0},log:[],streak:0,last:"",used:[],earn:[0,0,0]};
+  payUp(all,ph,pl.price);
+  return ph;
+}
+function addDemo(all,level){
+  var parent=cph;
+  if(level>1){var up=team(all,cph)[level-2];parent=up.length?up[Math.floor(Math.random()*up.length)]:addDemo(all,level-1)}
+  return newMember(all,parent);
+}
+function table(el,head,data){
+  el.innerHTML="";
+  var h=document.createElement("tr");
+  head.forEach(function(t){var x=document.createElement("th");x.textContent=t;h.appendChild(x)});
+  el.appendChild(h);
+  data.forEach(function(r){var tr=document.createElement("tr");r.forEach(function(t){var d=document.createElement("td");d.textContent=t;tr.appendChild(d)});el.appendChild(tr)});
+}
+function drawTeam(){
+  var all=users(),T=team(all,cph),tot=0,lv=[],mem=[],depT=0,cnt=0;
+  cu=all[cph];
+  $("myCode").textContent=cu.code;
+  for(var i=0;i<3;i++){
+    tot+=cu.earn[i];
+    lv.push(["Level "+(i+1),i===0?"Your direct invites":"Invited by Level "+i,Math.round(RATES[i]*100)+"%",peso(1000*RATES[i]),T[i].length,peso(cu.earn[i])]);
+    T[i].forEach(function(p){var m=all[p],d=m.td||0,c=(cu.fm&&cu.fm[p])||0;depT+=d;cnt++;mem.push([cnt,"Level "+(i+1),m.first+" "+m.last.charAt(0)+".",p.slice(0,4)+"***"+p.slice(-4),m.plan?m.plan.name:"No plan yet",peso(d),peso(c)])});
+  }
+  $("teamEarn").textContent=peso(tot);
+  $("teamCount").textContent=(T[0].length+T[1].length+T[2].length)+" members in your team";
+  table($("lvlTbl"),["Level","Who","Commission","On a PhP 1,000 plan","Members","You earned"],lv);
+  table($("memTbl"),["#","Level","Name","Mobile","Plan","Total deposit","Your commission"],mem);
+  rows($("memSum"),[["People you invited",String(cnt)],["Their total deposits",peso(depT)],["Your commission from them",peso(tot)]]);
+  $("memToggle").textContent=($("memBox").hidden?"See invited people":"Hide invited people")+" ("+cnt+")";
+  $("memEmpty").textContent=mem.length?"":"No one has joined yet. Share your code to invite people.";
+  $("memTbl").hidden=!mem.length;
+}
+$("memToggle").onclick=function(){var b=$("memBox");b.hidden=!b.hidden;$("memToggle").setAttribute("aria-expanded",String(!b.hidden));drawTeam()};
+$("copyCode").onclick=function(){
+  var m=$("copyMsg"),fail="Copy failed. Select the code and copy it.";
+  try{navigator.clipboard.writeText(cu.code).then(function(){m.textContent="Copied."},function(){m.textContent=fail})}catch(e){m.textContent=fail}
+};
+
+buildCards();
+var cur=sget("sessionStorage","binhi_session");
+if(cur&&users()[cur]&&users()[cur].hash)showApp(cur);else setMode("register");
+</script>
+</body>
+</html>
